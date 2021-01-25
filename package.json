@@ -1,0 +1,36 @@
+{
+  "name": "bazelisk-setup-action",
+  "version": "1.0.0",
+  "description": "Setup Bazelisk in the GitHub action workflow.",
+  "main": "dist/index.js",
+  "engines": {
+    "node": ">=12.x"
+  },
+  "scripts": {
+    "lint": "eslint 'src/' 'test/'",
+    "test": "npm run build && yarn test:unit",
+    "test:unit": "jest",
+    "build": "./node_modules/.bin/ncc build src/index.ts -o dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/doppelganger113/bazelisk-setup-action.git"
+  },
+  "keywords": [
+    "bazelisk",
+    "bazel",
+    "action",
+    "node",
+    "javascript"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/doppelganger113/bazelisk-setup-action/issues"
+  },
+  "homepage": "https://github.com/doppelganger113/bazelisk-setup-action#readme",
+  "dependencies": {
+    "@actions/core": "^1.2.6",
+    "@actions/github": "^4.0.0"
+  }
+}
