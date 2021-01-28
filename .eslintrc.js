@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-undef
 module.exports = {
   root: true,
   parser: '@typescript-eslint/parser',
@@ -7,10 +8,10 @@ module.exports = {
     'promise'
   ],
   parserOptions: {
-    tsconfigRootDir: __dirname,
     project: ['./tsconfig.json'],
     ecmaVersion: 6,
-    sourceType: 'module'
+    sourceType: 'module',
+    createDefaultProgram: true
   },
   rules: {
     // Jest
