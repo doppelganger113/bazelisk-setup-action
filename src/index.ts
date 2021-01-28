@@ -9,7 +9,7 @@ const logger = new CoreLogger();
 export const main = async (): Promise<void> => {
   const config = getConfiguration();
   const gitHubActionHelper = new GitHubActionProxy(logger);
-  const gitHubApiImp = new GitHubApiImpl(config.gitHubServerUrl, logger);
+  const gitHubApiImp = new GitHubApiImpl(config.gitHubApiUrl, logger);
 
   await new BazeliskSetupAction(
     config, logger, gitHubActionHelper, gitHubApiImp
