@@ -3,12 +3,13 @@ import {Logger} from "../../src/core/Logger";
 import {Configuration} from "../../src/core/Configuration";
 import {GitHubActionHelper} from "../../src/core/GitHubActionHelper";
 import {GitHubApiImpl} from "../../src/ports/GitHubApiImpl";
+import {GITHUB_API_URL, GITHUB_SERVER_URL} from "../env";
 
 describe('BazeliskSetupAction', () => {
   let bazeliskSetupAction: BazeliskSetupAction;
   const configuration: Configuration = {
-    gitHubApiUrl: 'https://api.github.com',
-    gitHubServerUrl: 'https://github.com/',
+    gitHubApiUrl: GITHUB_API_URL,
+    gitHubServerUrl: GITHUB_SERVER_URL,
     platform: 'linux',
     releaseTagName: 'latest'
   };

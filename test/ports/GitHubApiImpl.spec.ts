@@ -2,6 +2,7 @@ import {GitHubApi} from "../../src/core/GitHubApi";
 import {GitHubApiImpl} from "../../src/ports/GitHubApiImpl";
 import {GIT_HUB_OWNER, GIT_HUB_REPO} from "../../src/core/BazeliskSetupAction";
 import {Logger} from '../../src/core/Logger';
+import {GITHUB_API_URL} from "../env";
 
 describe('fetchLatestRelease', () => {
   let gitHubApi: GitHubApi;
@@ -11,7 +12,7 @@ describe('fetchLatestRelease', () => {
   }
 
   beforeEach(() => {
-    gitHubApi = new GitHubApiImpl('https://api.github.com/', loggerMock);
+    gitHubApi = new GitHubApiImpl(GITHUB_API_URL, loggerMock);
   })
 
   it('should fetch the latest release data', async () => {

@@ -27,7 +27,7 @@ export class GitHubApiImpl implements GitHubApi {
   }
 
   async fetchLatestRelease(owner: string, repo: string): Promise<GitHubRelease> {
-    const url = `${this.host}repos/${owner}/${repo}/releases/latest`;
+    const url = `${this.host}/repos/${owner}/${repo}/releases/latest`;
 
     this.logger.debug('GET ' + url)
 
