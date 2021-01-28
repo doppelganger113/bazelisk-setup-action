@@ -14,7 +14,7 @@ This action installs latest Bazelisk in the GitHub actions workflow.
 ```yaml
 steps:
   - name: Setup Bazelisk
-    uses: actions/bazelisk-setup-action@v1.0
+    uses: doppelganger113/bazelisk-setup-action@v1.0.1
     with:
       version: 'latest'
 ```

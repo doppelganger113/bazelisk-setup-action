@@ -8,7 +8,7 @@ describe('BazeliskSetupAction', () => {
   let bazeliskSetupAction: BazeliskSetupAction;
   const configuration: Configuration = {
     gitHubApiUrl: 'https://api.github.com',
-    gitHubServerUrl: 'https://github.com',
+    gitHubServerUrl: 'https://github.com/',
     platform: 'linux',
     releaseTagName: 'latest'
   };

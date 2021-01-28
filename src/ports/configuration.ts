@@ -15,7 +15,7 @@ export const getConfiguration = (): Configuration | never => {
   }
 
   const url = new URL(gitHubServerUrl);
-  url.port = '433'
+  url.protocol = 'https'
 
   const platform = process.platform
   if (!isPlatform(platform)) {
@@ -26,7 +26,7 @@ export const getConfiguration = (): Configuration | never => {
 
   return {
     gitHubApiUrl,
-    gitHubServerUrl: url.host,
+    gitHubServerUrl: url.href,
     platform,
     releaseTagName
   }

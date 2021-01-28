@@ -4,8 +4,8 @@ import {getExecutableNameByPlatform, getReleaseNameByPlatform} from "./platform"
 import {Configuration} from "./Configuration";
 import {GitHubApi} from "./GitHubApi";
 
-const GIT_HUB_OWNER = 'bazelbuild';
-const GIT_HUB_REPO = 'bazelisk';
+export const GIT_HUB_OWNER = 'bazelbuild';
+export const GIT_HUB_REPO = 'bazelisk';
 
 export class BazeliskSetupAction {
   constructor(
@@ -17,6 +17,7 @@ export class BazeliskSetupAction {
   }
 
   async run(): Promise<void> {
+    this.logger.debug(`Fetching tag name for: ${this.config.releaseTagName}`);
     const tagName = await this.fetchReleaseTagName(this.config.releaseTagName)
 
     const releaseName = getReleaseNameByPlatform(this.config.platform)
@@ -40,7 +41,7 @@ export class BazeliskSetupAction {
   private fetchRelease(
     gitHubServerUrl: string, tagName: string, releaseName: string
   ): Promise<string> {
-    const url = `${gitHubServerUrl}/bazelbuild/bazelisk/releases/download/${tagName}/${releaseName}`;
+    const url = `${gitHubServerUrl}bazelbuild/bazelisk/releases/download/${tagName}/${releaseName}`;
 
     return this.gitHubActionHelper.downloadTool(url);
   }
