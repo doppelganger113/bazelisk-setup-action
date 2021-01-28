@@ -37,6 +37,9 @@ describe('BazeliskSetupAction', () => {
   it('should do run without any errors', async () => {
     await bazeliskSetupAction.run()
 
+    expect(gitHubApiImpl.fetchLatestRelease)
+      .toHaveBeenCalledWith("bazelbuild", "bazelisk")
+
     expect(githubActionHelper.downloadTool)
       .toHaveBeenCalledWith(
         'https://github.com/bazelbuild/bazelisk/releases/download/v1.7.4/bazelisk-linux-amd64'
@@ -52,6 +55,9 @@ describe('BazeliskSetupAction', () => {
   it('should run and specific release by tag name', async () => {
     configuration.releaseTagName = "v1.6.1"
     await bazeliskSetupAction.run()
+
+    expect(gitHubApiImpl.fetchLatestRelease)
+      .toHaveBeenCalledWith("bazelbuild", "bazelisk")
 
     expect(githubActionHelper.downloadTool)
       .toHaveBeenCalledWith(

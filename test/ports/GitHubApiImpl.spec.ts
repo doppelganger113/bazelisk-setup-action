@@ -6,7 +6,7 @@ describe('fetchLatestRelease', () => {
   let gitHubApi: GitHubApi;
 
   beforeEach(() => {
-    gitHubApi = new GitHubApiImpl('https://api.github.com');
+    gitHubApi = new GitHubApiImpl('https://api.github.com/');
   })
 
   it('should fetch the latest release data', async () => {

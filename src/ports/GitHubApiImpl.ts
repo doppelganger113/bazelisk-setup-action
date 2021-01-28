@@ -24,7 +24,7 @@ export class GitHubApiImpl implements GitHubApi {
 
   async fetchLatestRelease(owner: string, repo: string): Promise<GitHubRelease> {
     const response = await axios.get<unknown>(
-      `${this.host}/repos/${owner}/${repo}/releases/latest`,
+      `${this.host}repos/${owner}/${repo}/releases/latest`,
       {
         headers: {'user-agent': USER_AGENT}
       },
