@@ -25,6 +25,6 @@ jobs:
             ${{ runner.OS }}-
       - name: Install dependencies
         run: npm ci
-      - run: npm lint
+      - run: npm run lint
       - run: npm run build --if-present
       - run: npm test
