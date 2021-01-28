@@ -3,5 +3,5 @@ export interface GitHubRelease {
 }
 
 export interface GitHubApi {
-  fetchRelease(owner: string, repo: string, release: string): Promise<GitHubRelease>;
+  fetchLatestRelease(owner: string, repo: string): Promise<GitHubRelease>;
 }

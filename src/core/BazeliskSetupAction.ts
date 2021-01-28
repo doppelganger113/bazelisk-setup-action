@@ -4,6 +4,9 @@ import {getExecutableNameByPlatform, getReleaseNameByPlatform} from "./platform"
 import {Configuration} from "./Configuration";
 import {GitHubApi} from "./GitHubApi";
 
+const GIT_HUB_OWNER = 'bazelbuild';
+const GIT_HUB_REPO = 'bazelisk';
+
 export class BazeliskSetupAction {
   constructor(
     private readonly config: Configuration,
@@ -14,33 +17,46 @@ export class BazeliskSetupAction {
   }
 
   async run(): Promise<void> {
-    const {tag_name} = await this.gitHubApi
-      .fetchRelease('bazelbuild', 'bazelisk', 'latest')
-    this.logger.debug(`Downloaded Bazelisk release info with tag: ${tag_name}`)
+    const tagName = await this.fetchReleaseTagName(this.config.releaseTagName)
 
     const releaseName = getReleaseNameByPlatform(this.config.platform)
 
     this.logger.debug(`Fetching latest Bazelisk release: ${releaseName}`)
-    const latestBazeliskRelease = await this.fetchLatestBazeliskRelase(
-      this.config.gitHubServerUrl, tag_name, releaseName
+    const latestBazeliskRelease = await this.fetchRelease(
+      this.config.gitHubServerUrl, tagName, releaseName
     )
 
     const targetFileName = getExecutableNameByPlatform(this.config.platform)
 
     this.logger.debug('Caching Bazelisk...')
     const cachedPath = await this.gitHubActionHelper.cacheFile(
-      latestBazeliskRelease, targetFileName, 'bazel', tag_name
+      latestBazeliskRelease, targetFileName, 'bazel', tagName
     )
 
     this.logger.debug(`Cached Bazelisk at ${cachedPath}`)
     this.gitHubActionHelper.addPath(cachedPath)
   }
 
-  private fetchLatestBazeliskRelase(
+  private fetchRelease(
     gitHubServerUrl: string, tagName: string, releaseName: string
   ): Promise<string> {
     const url = `${gitHubServerUrl}/bazelbuild/bazelisk/releases/download/${tagName}/${releaseName}`;
 
     return this.gitHubActionHelper.downloadTool(url);
+  }
+
+  private async fetchReleaseTagName(releaseVersion: string): Promise<string> {
+    let tagName: string;
+
+    if (releaseVersion === 'latest') {
+      const release = await this.gitHubApi.fetchLatestRelease(GIT_HUB_OWNER, GIT_HUB_REPO)
+      tagName = release.tag_name
+    } else {
+      tagName = releaseVersion
+    }
+
+    this.logger.debug(`Downloaded Bazelisk release info with tag: ${tagName}`)
+
+    return tagName;
   }
 }

@@ -1,6 +1,7 @@
 import {Configuration} from "../core/Configuration";
 import {isPlatform} from "../core/platform";
 import {URL} from "url";
+import * as core from '@actions/core';
 
 export const getConfiguration = (): Configuration | never => {
   const gitHubApiUrl = process.env.GITHUB_API_URL || ''
@@ -21,9 +22,12 @@ export const getConfiguration = (): Configuration | never => {
     throw new Error('Unsupported platform ' + platform)
   }
 
+  const releaseTagName = core.getInput('version', {required: false})
+
   return {
     gitHubApiUrl,
     gitHubServerUrl: url.host,
-    platform
+    platform,
+    releaseTagName
   }
 }

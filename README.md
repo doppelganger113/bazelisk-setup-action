@@ -1,12 +1,22 @@
 # Bazelisk setup action
-This action installs Bazelisk in the GitHub action workflow.
+![Node.js CI](https://github.com/doppelganger113/bazelisk-setup-action/workflows/Node.js%20CI/badge.svg)
+
+This action installs latest Bazelisk in the GitHub action workflow.
+
+## Inputs
+
+### `version`
+
+**Optional** The version of Bazelisk to install. Default `"latest"`.
+
 
 ## Example usage
 ```yaml
-
 steps:
   - name: Setup Bazelisk
     uses: actions/bazelisk-setup-action@v1.0
+    with:
+      version: 'latest'
 ```
 
 ## Development

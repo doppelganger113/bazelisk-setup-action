@@ -22,9 +22,9 @@ export class GitHubApiImpl implements GitHubApi {
   constructor(private readonly host: string) {
   }
 
-  async fetchRelease(owner: string, repo: string, release: string): Promise<GitHubRelease> {
+  async fetchLatestRelease(owner: string, repo: string): Promise<GitHubRelease> {
     const response = await axios.get<unknown>(
-      `${this.host}/repos/${owner}/${repo}/releases/${release}`,
+      `${this.host}/repos/${owner}/${repo}/releases/latest`,
       {
         headers: {'user-agent': USER_AGENT}
       },

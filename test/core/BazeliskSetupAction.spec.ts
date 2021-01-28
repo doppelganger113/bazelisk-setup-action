@@ -9,7 +9,8 @@ describe('BazeliskSetupAction', () => {
   const configuration: Configuration = {
     gitHubApiUrl: 'https://api.github.com',
     gitHubServerUrl: 'https://github.com',
-    platform: 'linux'
+    platform: 'linux',
+    releaseTagName: 'latest'
   };
   const testLogger: Logger = {
     error: jest.fn(),
@@ -24,7 +25,7 @@ describe('BazeliskSetupAction', () => {
   // @ts-ignore
   const gitHubApiImpl: GitHubApiImpl = {
     host: configuration.gitHubServerUrl,
-    fetchRelease: jest.fn(() => Promise.resolve({tag_name: 'v1.7.4'}))
+    fetchLatestRelease: jest.fn(() => Promise.resolve({tag_name: 'v1.7.4'}))
   };
 
   beforeEach(() => {
@@ -43,6 +44,22 @@ describe('BazeliskSetupAction', () => {
 
     expect(githubActionHelper.cacheFile)
       .toHaveBeenCalledWith("/var/downloadedFile", "bazel", "bazel", "v1.7.4")
+
+    expect(githubActionHelper.addPath)
+      .toHaveBeenCalledWith("/var/cachedFile")
+  })
+
+  it('should run and specific release by tag name', async () => {
+    configuration.releaseTagName = "v1.6.1"
+    await bazeliskSetupAction.run()
+
+    expect(githubActionHelper.downloadTool)
+      .toHaveBeenCalledWith(
+        'https://github.com/bazelbuild/bazelisk/releases/download/v1.6.1/bazelisk-linux-amd64'
+      )
+
+    expect(githubActionHelper.cacheFile)
+      .toHaveBeenCalledWith("/var/downloadedFile", "bazel", "bazel", "v1.6.1")
 
     expect(githubActionHelper.addPath)
       .toHaveBeenCalledWith("/var/cachedFile")

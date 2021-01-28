@@ -1,6 +1,11 @@
 name: 'Bazelisk setup action'
 description: 'Setup Bazelisk in the workflow'
 author: 'doppelganger113'
+inputs:
+  version:
+    description: 'Bazelisk release tag'
+    required: false
+    default: 'latest'
 runs:
   using: 'node12'
   main: 'dist/index.js'
