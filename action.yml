@@ -1,0 +1,6 @@
+name: 'Bazelisk setup action'
+description: 'Setup Bazelisk in the workflow'
+author: 'doppelganger113'
+runs:
+  using: 'node12'
+  main: 'dist/index.js'
