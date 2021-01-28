@@ -1,7 +1,7 @@
 # Bazelisk setup action
 ![Node.js CI](https://github.com/doppelganger113/bazelisk-setup-action/workflows/Node.js%20CI/badge.svg)
 
-This action installs latest Bazelisk in the GitHub action workflow.
+This action installs latest Bazelisk in the GitHub actions workflow.
 
 ## Inputs
 
