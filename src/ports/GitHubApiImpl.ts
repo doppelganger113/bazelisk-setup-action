@@ -1,5 +1,6 @@
 import {GitHubApi, GitHubRelease} from "../core/GitHubApi";
 import axios from "axios";
+import {Logger} from "../core/Logger";
 
 const USER_AGENT = 'github doppelganger113/bazelisk-setup-action'
 
@@ -19,16 +20,20 @@ export const isGitHubRelease = (value: unknown): value is GitHubRelease => {
 
 export class GitHubApiImpl implements GitHubApi {
 
-  constructor(private readonly host: string) {
+  constructor(
+    private readonly host: string,
+    private readonly logger: Logger
+  ) {
   }
 
   async fetchLatestRelease(owner: string, repo: string): Promise<GitHubRelease> {
-    const response = await axios.get<unknown>(
-      `${this.host}repos/${owner}/${repo}/releases/latest`,
-      {
-        headers: {'user-agent': USER_AGENT}
-      },
-    );
+    const url = `${this.host}repos/${owner}/${repo}/releases/latest`;
+
+    this.logger.debug('GET ' + url)
+
+    const response = await axios.get<unknown>(url, {
+      headers: {'user-agent': USER_AGENT}
+    });
 
     const data = response.data
     if (!isGitHubRelease(data)) {
